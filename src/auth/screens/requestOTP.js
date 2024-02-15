@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { Color } from '../../utilities/theme';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from '../../global-components.js/buttons';
-import { Input } from '../../global-components.js/inputs';
+import { Input, Inputs } from '../../global-components.js/inputs';
 import { BoldText2, BoldText3 } from '../../global-components.js/texts';
 import { AuthBackIcon } from '../../utilities/icons';
 import { RequestOTPController } from '../auth-controllers';
@@ -102,12 +102,18 @@ function RequestOTP({ navigation }) {
                     <View style={{
                         marginTop: 50
                     }} >
-                        <Input
-                            label="Email:"
+                        <Inputs
+                        label="Email"
                             placeholder="enter your email"
                             data={email}
                             setData={setEmail}
                         />
+                        {/* <Input
+                            label="Email:"
+                            placeholder="enter your email"
+                            data={email}
+                            setData={setEmail}
+                        /> */}
 
                     </View>
                     <View style={{

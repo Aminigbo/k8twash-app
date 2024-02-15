@@ -10,7 +10,7 @@ import { fetchFcmToken } from '../../utilities/fcntoken';
 import { Color } from '../../utilities/theme';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from '../../global-components.js/buttons';
-import { Input } from '../../global-components.js/inputs';
+import { Input, Inputs } from '../../global-components.js/inputs';
 import { BoldText2, BoldText3 } from '../../global-components.js/texts';
 import { AuthBackIcon, AuthSuccessIcon } from '../../utilities/icons';
 import { ResetPwdController } from '../auth-controllers';
@@ -88,14 +88,14 @@ function ResetPWD({ navigation, appState, route }) {
                     <View style={{
                         marginTop: 50
                     }} >
-                        <Input
+                        <Inputs
                             label="Enter new password:"
                             placeholder="enter new password"
                             data={pwd1}
                             setData={setpwd1}
                         />
 
-                        <Input
+                        <Inputs
                             label="Confirm new password:"
                             placeholder="Re-enter new password"
                             data={pwd2}

@@ -10,9 +10,10 @@ import { fetchFcmToken } from '../../utilities/fcntoken';
 import { Color } from '../../utilities/theme';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from '../../global-components.js/buttons';
-import { Input } from '../../global-components.js/inputs';
+import { Input, Inputs } from '../../global-components.js/inputs';
 import { BoldText1, BoldText2, BoldText3 } from '../../global-components.js/texts';
 import { AuthBackIcon } from '../../utilities/icons';
+import { User } from '../../redux';
 
 // import RNPaystack from 'react-native-paystack'; 
 
@@ -21,7 +22,7 @@ import { AuthBackIcon } from '../../utilities/icons';
 const Colors = Color()
 
 
-function VerifyOTP({ navigation, route }) {
+function VerifyOTP({ navigation, route, disp_user }) {
 
     const [data, setData] = useState(null);
     const [otp, setotp] = useState("");
@@ -93,13 +94,20 @@ function VerifyOTP({ navigation, route }) {
                     <View style={{
                         marginTop: 50
                     }} >
+                        <Inputs
+                            label="OTP"
+                            placeholder="Enter OTP"
+                            data={otp}
+                            setData={setotp}
+                        />
 
+                        {/* 
                         <Input
                             label="OTP:"
                             placeholder="Enter OTP"
                             data={otp}
                             setData={setotp}
-                        />
+                        /> */}
                         {/* <View style={{ height: 35, width: 35, backgroundColor: Colors.primary, borderRadius: 35 }} /> */}
 
                         {/* <BoldText1
@@ -123,9 +131,15 @@ function VerifyOTP({ navigation, route }) {
                                 console.log(data)
                                 if (otp == data.OTP) {
                                     Alert.alert("Success", "OTP verified successfully", [{
-                                        text: "Reset your pasword",
+                                        text: route.params.Reg ? "Proceed to home": "Reset your pasword",
                                         onPress: () => {
-                                            navigation.replace("ResetPWD", { data })
+                                            if (route.params.Reg) {
+                                                disp_user(data)
+                                                navigation.replace("Home", { data })
+                                                //  at this point, user the returned email and password to login
+                                            } else {
+                                                navigation.replace("ResetPWD", { data })
+                                            }
                                         }
                                     }])
                                 } else {
@@ -163,7 +177,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, encoded) => {
     return {
-
+        disp_user: (payload) => dispatch(User(payload)),
     };
 };
 

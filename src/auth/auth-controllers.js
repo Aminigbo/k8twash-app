@@ -1,9 +1,11 @@
 import { RequestOTPModel, ResetPWDModel, SigninService, SignupService } from "../services/auth-service"
 import { PasswordValidate, isValidEmail } from "../utilities"
 import { Alert } from "react-native"
+
+
 export function SignupController(payload) {
-    let { name, email, country, city, password, setLoading, disp_user, navigation } = payload
-    if (!name || !email || !country || !city || !password) {
+    let { name, email, country, city, password, setLoading, disp_user, navigation, phone } = payload
+    if (!name || !email || !country || !city || !password || !phone) {
         Alert.alert("Field error", "Fill all forms to proceed")
     } else if (!isValidEmail(email)) { // chech for valid email
         Alert.alert("Email error", "Enter a valid email")
@@ -20,11 +22,13 @@ export function SignupController(payload) {
                     Alert.alert("Error", response.message)
                     console.log(response)
                 } else {
-                    disp_user(response.data)
-                    Alert.alert("Success", "Account created successfully", [
+                    // disp_user(response.data)
+                    Alert.alert("Success", "Account created successfully, proceed to verify your email", [
                         {
                             text: "Proceed", onPress: () => {
-                                navigation.navigate("Home")
+
+                                // navigation.navigate("Home")
+                                navigation.replace("VerifyOTP", { data: response.data, Reg:true, })
                             }
                         }
                     ])

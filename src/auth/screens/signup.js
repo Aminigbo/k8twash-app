@@ -28,6 +28,7 @@ function SignIn({ navigation, appState, disp_user }) {
     const [loading, setLoading] = useState(false)
     const [drawerComponent, setDrawerComponent] = useState("")
     const [name, setname] = useState("");
+    const [phone, setphone] = useState("");
     const [email, setemail] = useState("")
     const [country, setcountry] = useState("")
     const [city, setcity] = useState("")
@@ -96,6 +97,14 @@ function SignIn({ navigation, appState, disp_user }) {
                             keyboardType='email-address'
                         />
                         <Inputs
+                            type="numeric"
+                            label="Phone number:"
+                            placeholder="enter your phone number"
+                            data={phone}
+                            setData={setphone}
+                        />
+
+                        <Inputs
                             label="Email:"
                             placeholder="enter your email"
                             data={email}
@@ -108,7 +117,7 @@ function SignIn({ navigation, appState, disp_user }) {
                                 onOpen()
                             }}
                             label="Country"
-                            text={country == "" ? "Select countrey" : country}
+                            text={country == "" ? "Select Country" : country}
                             TextColor="grey"
                             style={{
                                 backgroundColor: Colors.secondary,
@@ -151,7 +160,7 @@ function SignIn({ navigation, appState, disp_user }) {
                                 if (loading == false) {
                                     SignupController({
                                         name, email, country, city, password,
-                                        setLoading, disp_user, navigation
+                                        setLoading, disp_user, navigation, phone
                                     })
                                 }
                             }}

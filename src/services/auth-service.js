@@ -1,12 +1,13 @@
 import { API_URL } from "../utilities";
 
 export async function SignupService(payload) {
-    let { name, email, country, city, password, setLoading } = payload
+    let { name, email, country, city, password, setLoading, phone } = payload
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
         "name": name,
+        "phone": phone,
         "city": city,
         "country": country,
         "email": email,

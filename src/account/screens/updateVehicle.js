@@ -18,7 +18,8 @@ import { AuthBackIcon } from '../../utilities/icons';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Schedules } from '../../redux';
 import { CreateScheduleController } from '../account-controllers';
-import { Center, HStack, VStack, Stack, Box, Pressable, Actionsheet, useDisclose, Text, Input } from 'native-base';
+import { Center, HStack, VStack, Stack, Box, Pressable, Actionsheet, useDisclose, Text, Input, Spinner } from 'native-base';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 // import RNPaystack from 'react-native-paystack'; 
 
@@ -31,6 +32,8 @@ function UpdateVehicle({ navigation, disp_schedules, appState }) {
     const [date, setDate] = useState(new Date());
     const [plateNumber, setPlateNumber] = useState("")
     const [loading, setLoading] = useState(false)
+    const [blur, setBlur] = React.useState(true)
+    const [address, setAddress] = React.useState("")
     const [PickedImage, setPickedImage] = React.useState({
         status: false
     })
@@ -174,7 +177,8 @@ function UpdateVehicle({ navigation, disp_schedules, appState }) {
                         Alert,
                         uuid: User.uuid,
                         navigation,
-                        User
+                        User,
+                        address
 
                     }
                     CreateScheduleController(Data)
@@ -244,6 +248,13 @@ function UpdateVehicle({ navigation, disp_schedules, appState }) {
     }
 
 
+    const CustomRow = ({ item }) => (
+        <View style={{}}>
+            <Text style={{ color: 'black' }}>{item.description}</Text>
+        </View>
+    );
+
+
     return (
 
         <>
@@ -257,36 +268,117 @@ function UpdateVehicle({ navigation, disp_schedules, appState }) {
                     hidden={hidden}
                 />
 
+
+
+
+
+                <View style={{
+                    // justifyContent:"center",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    // backgroundColor:"red"
+                }} >
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.pop()
+                        }} style={{
+                            // backgroundColor:"red",
+                            padding: 10
+                        }}>
+                        <AuthBackIcon />
+                    </TouchableOpacity>
+                    <BoldText3
+                        text="Schedule a wash"
+                        color={Colors.dark}
+                        style={{
+                            marginLeft: 50,
+                            marginTop: 10
+                        }}
+                    />
+                </View>
+
+
+                <Stack
+                    style={{ backgroundColor: "#fff",paddingHorizontal:15, height: blur == false ? 300 : 90 }} mt={5}  
+                >
+                    <BoldText2 color="black" style={{ marginBottom: 7 }} text="Add location" />
+                    <GooglePlacesAutocomplete
+
+                        listLoaderComponent={<Spinner />}
+                        placeholder={`Location`}
+                        enableHighAccuracyLocation={true}
+                        enablePoweredByContainer={true}
+                        onPress={(data, details = null) => {
+                            let address = data.description;
+
+                            setAddress(data.description)
+                            setBlur(true);
+                            console.log(data)
+                        }}
+                        query={{
+                            key: "AIzaSyCWmG9Ea98O1RgB1j-oUR8AtlQCcTueTwM",
+                            // key:"AIzaSyCWmG9Ea98O1RgB1j-oUR8AtlQCcTueTwM"
+                            language: 'en',
+                            components: 'country:ng',
+                        }}
+                        // predefinedPlaces={FechBethels}
+                        textInputProps={{
+                            // autoFocus: User && User.DeliveryLocation && User.DeliveryLocation.length > 0 ? false : true,
+                            onFocus: () => {
+                                // setBlure(true)
+                            },
+                            onBlur: () => {
+                                // setBlure(false)
+                            },
+                            onChange: (e) => {
+                                console.log(e)
+                                // setAddress(e.nativeEvent.text)
+                                if (e.nativeEvent.text.length > 0) {
+                                    setBlur(false)
+                                } else {
+                                    setBlur(true)
+                                }
+                            },
+                            placeholderTextColor: "grey",
+                            style:
+                            {
+                                color: "black",
+                                width: "100%",
+                                height: "80%",
+                                borderWidth: 1,
+                                borderColor: '#ccc',
+                                borderRadius: 10,
+                                paddingHorizontal: 10,
+                                // marginLeft: "5%",
+                                marginBottom: 10,
+                            }
+                        }}
+
+                        // Change the text style of suggestions
+                        textInputStyle={{
+                            color: 'blue', // Change the text color
+                        }}
+
+
+                        // currentLocation={true}
+                        fetchDetails={true}
+
+                        // Use renderRow to customize the appearance of suggestion items
+                        renderRow={(item) => <CustomRow item={item} />}
+                    />
+                </Stack>
+
+
+
                 <ScrollView>
+
                     <Stack style={{ padding: 15 }} >
-                        <View style={{
-                            // justifyContent:"center",
-                            alignItems: "center",
-                            flexDirection: "row",
-                            // backgroundColor:"red"
-                        }} >
-                            <TouchableOpacity
-                                onPress={() => {
-                                    navigation.pop()
-                                }} style={{
-                                    // backgroundColor:"red",
-                                    padding: 10
-                                }}>
-                                <AuthBackIcon />
-                            </TouchableOpacity>
-                            <BoldText3
-                                text="Schedule a wash"
-                                color={Colors.dark}
-                                style={{
-                                    marginLeft: 50,
-                                    marginTop: 10
-                                }}
-                            />
-                        </View>
 
                         <View style={{
-                            marginTop: 80
+                            // marginTop: 80
                         }} >
+
+
                             <SelectButton
                                 callBack={() => {
                                     setDrawerComponent("VEHICLE TYPE")
@@ -346,6 +438,7 @@ function UpdateVehicle({ navigation, disp_schedules, appState }) {
 
                         </View>
 
+
                         {/* add means of identification */}
                         <Pressable
                             onPress={() => {
@@ -371,7 +464,7 @@ function UpdateVehicle({ navigation, disp_schedules, appState }) {
                             <>
                                 <Image
                                     style={[styles.imageBackground, {
-                                        width: "100%", 
+                                        width: "100%",
                                         // height: 100,
                                         aspectRatio: 1,
                                         // marginTop: 20,
@@ -395,7 +488,7 @@ function UpdateVehicle({ navigation, disp_schedules, appState }) {
 
                     </Stack>
                 </ScrollView>
-            </SafeAreaView>
+            </SafeAreaView >
 
             <Actionsheet isOpen={isOpen} onClose={onClose}>
                 <Actionsheet.Content >

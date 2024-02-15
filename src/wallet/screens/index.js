@@ -72,7 +72,7 @@ function SignIn({ appState, navigation, disp_user }) {
     const bottomSheetRef = useRef(null);
 
     // bottom drawer  snapPoints variables
-    const snapPoints = useMemo(() => ['1%', '35%', '45%', '55%'], []);
+    const snapPoints = useMemo(() => ['1%', '35%', '45%', '75%'], []);
 
     // callbacks when the drawer is closed or open
     const handleSheetChanges = useCallback((index) => {
@@ -106,7 +106,7 @@ function SignIn({ appState, navigation, disp_user }) {
                 <View style={{ flex: 1 }}>
                     <Paystack
                         paystackKey="pk_live_02468d2800841051e35f9c137c63443e43481650"
-                        currency = "GHS"
+                        currency="GHS"
 
                         // paystackKey="pk_test_1b580eadea7c76d12313e1cc057923cfb1d8adbe"
                         // currency="NGN"
@@ -155,7 +155,7 @@ function SignIn({ appState, navigation, disp_user }) {
 
 
             {/* Bottom nav */}
-            {drawerState != 1 && <BottomNav page="Wallet" navigation={navigation} />}
+            {/* {drawerState != 1 && <BottomNav page="Wallet" navigation={navigation} />} */}
 
             {/* <View style={{
                 // marginTop: 90,
@@ -223,7 +223,7 @@ function SignIn({ appState, navigation, disp_user }) {
                             setCardpayment(true)
                             setPaymentSuccess(false)
                             setTimeout(() => {
-                                handleSnapPress(1)
+                                handleSnapPress(3)
                             }, 300);
                         }} />
                     {console.log(transactionHistory)}
@@ -419,9 +419,10 @@ function SignIn({ appState, navigation, disp_user }) {
 
 
 
-            </BottomSheet> 
+            </BottomSheet>
 
-            <BottomNav navigation={navigation} page="Wallet" />
+            {drawerState < 1 && <BottomNav navigation={navigation} page="Wallet" />}
+
 
         </>
 

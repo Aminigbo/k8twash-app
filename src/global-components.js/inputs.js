@@ -11,6 +11,7 @@ import { Input } from 'native-base';
 const Colors = Color()
 
 export function Inputs({
+    type,
     keyboardType,
     data, setData,
     label,
@@ -57,13 +58,14 @@ export function Inputs({
         <Input
             mb={3}
             // label="Password:"
+            keyboardType={type ? type : ""}
             value={data}
             onChangeText={(value) => setData(value)}
             placeholder={placeholder}
-            // placeholder="enter your password"
-            // data={password}
-            // setData={setpassword}
-            // onChangeText={(text) => setpassword(text)}
+        // placeholder="enter your password"
+        // data={password}
+        // setData={setpassword}
+        // onChangeText={(text) => setpassword(text)}
         />
 
         {bottomLabel &&

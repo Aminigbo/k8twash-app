@@ -9,6 +9,7 @@ export async function CreateScheduleModel(payload) {
         "vehicleColor": payload.color,
         "plateNumber": payload.plateNumber,
         "subscription": payload.subscriptionPlans,
+        "address": payload.address,
         "starting": CurrentDate(),
         "uuid": payload.uuid
     });
