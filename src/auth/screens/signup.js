@@ -236,7 +236,7 @@ function SignIn({ navigation, appState, disp_user }) {
                                                                 height: 20, width: 20, backgroundColor: e.color,
                                                                 borderRadius: 10
                                                             }} />
-                                                            <Text style={{ marginLeft: 30 }} > {e.name}</Text>
+                                                            <Text style={{ marginLeft: 30, color:"#000" }} > {e.name}</Text>
                                                         </HStack>
 
                                                     </Actionsheet.Item>
