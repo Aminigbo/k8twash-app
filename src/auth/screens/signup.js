@@ -220,7 +220,7 @@ function SignIn({ navigation, appState, disp_user }) {
                                                             borderBottomWidth: 1
                                                             // flex: 1,
                                                             // display:"flex"
-                                                            // dont add any other thing again.
+                                                            dont add any other thing again.
                                                         }}
                                                         onPress={() => {
                                                             onClose()
